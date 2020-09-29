@@ -3,12 +3,14 @@ import requests
 
 Symbols = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 Length = random.randrange(1,5)
-n = 0
 Domen = ['.com', '.ru', '.org', '.net']
+n = 0
 
-while n < 10000:
+while n < 100:
     Password = ''
     Url = ''
+    n += 1
+    
     file = open("site.txt", 'a+', encoding = 'utf-8')
 
     for i in range(Length):
@@ -27,5 +29,4 @@ while n < 10000:
         except:
             print ("Domen not exist")
 
-    file.close
-    n += 1
+    file.close()
