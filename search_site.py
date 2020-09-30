@@ -3,24 +3,23 @@ import requests
 
 Symbols = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 Length = random.randrange(1,5)
-Domen = ['.com', '.ru', '.org', '.net']
+Root = ['.com', '.ru', '.org', '.net']
 n = 0
 
 while n < 100:
-    Password = ''
+    Domen = ''
     Url = ''
     n += 1
     
     file = open("site.txt", 'a+', encoding = 'utf-8')
 
     for i in range(Length):
-        Password += random.choice(Symbols)
+        Domen += random.choice(Symbols)
 
-    for i in range(len(Domen)):
-        Url = Password + Domen[i]
-        Site = 'https://' + Url
+    for i in range(len(Root)):
+        Url = 'https://' + Domen + Root[i]
         try:      
-            r = requests.get(Site, timeout = 10)
+            r = requests.get(Url, timeout = 10)
             if r.status_code in [200, 302, 304]:
                 file.write('{}\n'.format(Url))
                 print(Url)
