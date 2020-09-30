@@ -26,6 +26,6 @@ while n < 100:
             elif r.status_code in [502, 404, 403]:
                 print ("Not found or not available")
         except:
-            print ("Domen not exist")
+            print ("Domain not exist")
 
     file.close()
