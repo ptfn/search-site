@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 Symbols = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-Length = random.randrange(1, 3)
+Length = random.randrange(1, 6)
 Root = ['.com', '.ru', '.org', '.net']
 n = 0
 
