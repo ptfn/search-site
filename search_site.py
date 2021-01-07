@@ -4,7 +4,7 @@ import requests
 
 
 Symbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-Length = randrange(3, 10)
+Length = randrange(3, 15)
 Root = ['.com', '.ru', '.org', '.net']
 
 while 1:
