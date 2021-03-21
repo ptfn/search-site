@@ -1,11 +1,18 @@
 from random import randrange, choice
 from bs4 import BeautifulSoup
 import requests
+import sys
 
+Max = int(sys.argv[1])
+
+try:
+    Length = randrange(1, Max)
+except:
+    print("Argument must be greater than 1")
+    exit(0)
 
 Symbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-Length = randrange(3, 8)
-Root = ['.com', '.ru', '.org', '.net']
+Root = ['.com', '.ru', '.org', '.net'] 
 
 while 1:
     Domain = ''
