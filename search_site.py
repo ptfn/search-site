@@ -3,7 +3,11 @@ from bs4 import BeautifulSoup
 import requests
 import sys
 
-Max = int(sys.argv[1])
+try:
+    Max = int(sys.argv[1])
+except:
+    print("Enter an argument example: python3 search_site.py 10 ")
+    exit(0)
 
 try:
     Length = randrange(1, Max)
