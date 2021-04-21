@@ -6,7 +6,7 @@ import sys
 try:
     Max = int(sys.argv[1])
 except:
-    print("Enter an argument example: python3 search_site.py 10 ")
+    print("Enter password generation length example argument: python3 search_site.py 10  ")
     exit(0)
 
 try:
@@ -31,7 +31,7 @@ while 1:
         url = 'http://' + Domain + Root[i]
 
         try:
-            r = requests.get(url, timeout=5)
+            r = requests.get(url, timeout=2.5)
             soup = BeautifulSoup(r.content, 'html.parser')
             title = soup.title.string
 
