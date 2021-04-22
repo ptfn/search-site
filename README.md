@@ -1,7 +1,8 @@
 ## Search-Site
 Running:
 ```
-$./install.sh
+$pip3 install -r requirements.txt
+$python3 search_site.py 16
 ```
 
 Stopping - CTRL + Z
