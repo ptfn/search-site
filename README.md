@@ -19,6 +19,6 @@ $pip3 install -r requirements.txt
 $python3 search_site.py 16 bcns
 ```
 
-## Saving site:
+## Saving sites:
 
 All sites with names are saved in site.txt
