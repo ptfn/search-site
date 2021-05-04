@@ -1,7 +1,6 @@
 from random import randrange, choice
 from bs4 import BeautifulSoup
-import requests
-import sys
+import requests, sys
 
 BigChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 SmallChar = "abcdefghijklmnopqrstuvwxyz"
