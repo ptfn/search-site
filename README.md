@@ -1,5 +1,7 @@
 # Search-Site
 
+The utility is designed to search for sites.
+
 ## Arguments:
 
 There are two arguments in total:
