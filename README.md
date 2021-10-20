@@ -24,6 +24,6 @@ $python3 search_site.py 16 bcns
 ## Stoping:
 Ctrl+C - stopping and showing statistics
 
-## Saving sites:
+## Saving:
 
 All sites with names are saved in site.txt
