@@ -53,8 +53,10 @@ def main():
 
     alphabet = brut(string)
     root = ['.com', '.ru', '.org', '.net']
-    allsite = 0
+
     found = 0
+    not_found = 0
+    exist = 0
 
     while 1:
         try:
@@ -81,19 +83,21 @@ def main():
                         print(url)
 
                     elif r.status_code in [502, 404, 403]:
+                        not_found += 1
                         print("Not found or not available!")
 
                 except:
+                    exist += 1
                     print("Site not exist!")
 
                 finally:
-                    allsite += 1
                     file.close()
                     time.sleep(0.5)
 
         except KeyboardInterrupt:
+            allsite = found + not_found + exist
             print("\n--- search statistics ---")
-            print("all/found = {}/{}".format(allsite, found))
+            print("all/found/not/exist = {}/{}/{}/{}".format(allsite, found, not_found, exist))
             break
 
 if __name__ == "__main__":
