@@ -1,12 +1,15 @@
 from random import randrange, choice
 from bs4 import BeautifulSoup
-import requests, sys
+import requests
+import datetime
 import time
+import sys
 
 number = "0123456789"
 symbols = "!?@#$%^&*=<>()[]/|,.+-_"
 bigchar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 smallchar = "abcdefghijklmnopqrstuvwxyz"
+
 
 def brut(string):
     str_last = ""
@@ -22,16 +25,21 @@ def brut(string):
             if string[i] == "c":
                 str_res += smallchar
                 str_last += "c"
-            
+
             if string[i] == "n":
                 str_res += number
                 str_last += "n"
-            
+
             if string[i] == "s":
                 str_res += symbols
                 str_last += "s"
 
     return str_res
+
+
+def now():
+    dt_obj =datetime.datetime.now()
+    return dt_obj.strftime("%b %d %H:%M:%S")
 
 
 def main():
@@ -41,10 +49,10 @@ def main():
         if maximus < 2 :
             print("Argument must be greater than 1.")
             exit(0)
-        else:    
+        else:
             print("Enter password generation length example argument: python3 search_site.py 10 bcns.")
             exit(0)
-    
+
     try:
         string = sys.argv[2]
     except:
@@ -57,6 +65,7 @@ def main():
     found = 0
     not_found = 0
     exist = 0
+    allsite = 0
 
     while 1:
         try:
@@ -72,7 +81,6 @@ def main():
                 url = 'http://' + domain + root[i]
 
                 try:
-
                     r = requests.get(url, timeout=10)
                     soup = BeautifulSoup(r.content, 'html.parser')
                     title = soup.title.string
@@ -80,25 +88,28 @@ def main():
                     if r.status_code in [200, 302, 304]:
                         file.write('{} - {}\n'.format(url, title))
                         found += 1
-                        print(url)
+                        allsite += 1
+                        print("{} [{}]: \033[32mfound {}!\033[0m".format(now(), allsite, url))
 
                     elif r.status_code in [502, 404, 403]:
                         not_found += 1
-                        print("Not found or not available!")
+                        allsite += 1
+                        print("{} [{}]: \033[33mnot found or not available!\033[0m".format(now(), allsite))
 
                 except:
                     exist += 1
-                    print("Site not exist!")
+                    allsite += 1
+                    print("{} [{}]: \033[31msite not exist!\033[0m".format(now(), allsite))
 
                 finally:
                     file.close()
                     time.sleep(0.5)
 
         except KeyboardInterrupt:
-            allsite = found + not_found + exist
             print("\n--- search statistics ---")
             print("all/found/not/exist = {}/{}/{}/{}".format(allsite, found, not_found, exist))
             break
+
 
 if __name__ == "__main__":
     main()
