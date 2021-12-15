@@ -1,4 +1,4 @@
-# Search-Site
+# SearchSite
 
 The utility is designed to search for sites.
 
