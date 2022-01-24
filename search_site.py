@@ -1,5 +1,6 @@
 from random import randrange, choice
 from bs4 import BeautifulSoup
+import argparse
 import requests
 import datetime
 import time
@@ -43,29 +44,21 @@ def now():
 
 
 def main():
-    try:
-        maximus = int(sys.argv[1])
-    except:
-        if maximus < 2 :
-            print("Argument must be greater than 1.")
-            exit(0)
-        else:
-            print("Enter password generation length example argument: python3 search_site.py 10 bcns.")
-            exit(0)
+    parser = argparse.ArgumentParser(description="Search Site")
+    parser.add_argument("-m", "--max", dest="max", help="maximum length website domain generation")
+    parser.add_argument("-a", "--alphabet", dest="alphabet", help="alphabet for generating a website domain")
+    args = parser.parse_args()
 
-    try:
-        string = sys.argv[2]
-    except:
-        print("Enter password generation length example argument: python3 search_site.py 10 bcns.")
-        exit(0)
-
-    alphabet = brut(string)
+    maximus = int(args.max)
+    alphabet = brut(args.alphabet)
     root = ['.com', '.ru', '.org', '.net']
 
     found = 0
     not_found = 0
     exist = 0
     allsite = 0
+
+    print("----- search site -----")
 
     while 1:
         try:
@@ -106,7 +99,7 @@ def main():
                     time.sleep(0.5)
 
         except KeyboardInterrupt:
-            print("\n--- search statistics ---")
+            print("\n----- search statistics -----")
             print("all/found/not/exist = {}/{}/{}/{}".format(allsite, found, not_found, exist))
             break
 

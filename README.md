@@ -18,7 +18,7 @@ There are two arguments in total:
 
 ```
 $pip3 install -r requirements.txt
-$python3 search_site.py 16 bcns
+$python3 search_site.py -m 16 -a bcns
 ```
 
 ## Stoping:
