@@ -39,7 +39,7 @@ def brut(string):
 
 
 def now():
-    dt_obj =datetime.datetime.now()
+    dt_obj = datetime.datetime.now()
     return dt_obj.strftime("%b %d %H:%M:%S")
 
 
