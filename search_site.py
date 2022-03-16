@@ -4,7 +4,7 @@ import argparse
 import requests
 import datetime
 import time
-import sys
+# import sys
 
 number = "0123456789"
 symbols = "!?@#$%^&*=<>()[]/|,.+-_"
