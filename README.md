@@ -27,4 +27,5 @@ OPTIONS:
 Ctrl+C - stopping and showing statistics
 
 ## Saving
-All named sites are saved in the site.txt file or you can specify in which file the generated sites will be saved.
+All named sites are saved in the `site.txt` file or you can specify in which file the generated sites will be saved.
+
