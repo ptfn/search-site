@@ -1,8 +1,10 @@
-from random import randrange, choice
+from colorama import Fore, Style
 from bs4 import BeautifulSoup
+import webbrowser
 import argparse
 import requests
 import datetime
+import random
 import time
 
 
@@ -12,30 +14,46 @@ bigchar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 smallchar = "abcdefghijklmnopqrstuvwxyz"
 
 
-def brut(string):
-    str_last = ""
-    str_res = ""
+def brut(bool_bigchar, bool_smallchar,
+         bool_number, bool_symbols):
+    string = ""
 
-    for i in range(len(string)):
-        if string[i] not in str_last:
+    if bool_bigchar:
+        string += bigchar
 
-            if string[i] == "b":
-                str_res += bigchar
-                str_last += "b"
+    if bool_smallchar:
+        string += smallchar
 
-            if string[i] == "c":
-                str_res += smallchar
-                str_last += "c"
+    if bool_number:
+        string += number
 
-            if string[i] == "n":
-                str_res += number
-                str_last += "n"
+    if bool_symbols:
+        string += symbols
 
-            if string[i] == "s":
-                str_res += symbols
-                str_last += "s"
+    if string == "":
+        string += bigchar + \
+                  smallchar + \
+                  number + \
+                  symbols
 
-    return str_res
+    return string
+
+
+def txt_grn(text):
+    return Fore.GREEN + text + Style.RESET_ALL
+
+
+def txt_rd(text):
+    return Fore.RED + text + Style.RESET_ALL
+
+
+def txt_yel(text):
+    return Fore.YELLOW + text + Style.RESET_ALL
+
+
+def open_url(url, bool_url):
+    if bool_url:
+        webbrowser.open(url)
 
 
 def now():
@@ -45,54 +63,93 @@ def now():
 
 def main():
     parser = argparse.ArgumentParser(description="Search Site")
-    parser.add_argument("-m", "--max", dest="max", help="maximum length website domain generation")
-    parser.add_argument("-a", "--alphabet", dest="alphabet", help="alphabet for generating a website domain")
+    parser.add_argument("-m", "--max",
+                        type=int,
+                        dest="max",
+                        default=10,
+                        help="maximum length website domain generation")
+    parser.add_argument("-b", "--bigchar",
+                        action="store_true",
+                        dest="bigchar",
+                        help="add bigchar in alphabet")
+    parser.add_argument("-c", "--smallchar",
+                        action="store_true",
+                        dest="smallchar",
+                        help="add smallchar in alphabet")
+    parser.add_argument("-n", "--number",
+                        action="store_true",
+                        dest="number",
+                        help="add number in alphabet")
+    parser.add_argument("-s", "--symbols",
+                        action="store_true",
+                        dest="symbols",
+                        help="add symbols in alphabet")
+    parser.add_argument("-u", "--url",
+                        default=False,
+                        action="store_true",
+                        dest="url",
+                        help="open url")
+    parser.add_argument("-o", "--out",
+                        default="site.txt",
+                        dest="out",
+                        help="out file")
+
     args = parser.parse_args()
 
-    maximus = int(args.max)
-    alphabet = brut(args.alphabet)
-    root = ['.com', '.ru', '.org', '.net']
+    args_big_char = args.bigchar
+    args_small_char = args.smallchar
+    args_number = args.number
+    args_symbols = args.symbols
+
+    bool_url = args.url
+    out = args.out
+
+    maximus = args.max
+    alphabet = brut(args_big_char, args_small_char,
+                    args_number, args_symbols)
+    root = [".com", ".ru", ".org", ".net"]
 
     found = 0
     not_found = 0
     exist = 0
-    allsite = 0
+    all_site = 0
 
     print("----- search site -----")
 
     while 1:
         try:
-            url = ''
-            domain = ''
-            length = randrange(1, maximus)
-            file = open("site.txt", 'a+', encoding='utf-8')
+            url = ""
+            domain = ""
+            length = random.randrange(1, maximus)
+            file = open(out, "a+", encoding="utf-8")
 
             for i in range(length):
-                domain += choice(alphabet)
+                domain += random.choice(alphabet)
 
             for i in range(len(root)):
-                url = 'http://' + domain + root[i]
+                url = "http://" + domain + root[i]
 
                 try:
                     r = requests.get(url, timeout=10)
-                    soup = BeautifulSoup(r.content, 'html.parser')
+                    soup = BeautifulSoup(r.content, "html.parser")
                     title = soup.title.string
 
                     if r.status_code in [200, 302, 304]:
                         file.write('{} - {}\n'.format(url, title))
+                        open_url(url, bool_url)
                         found += 1
-                        allsite += 1
-                        print("{} [{}]: \033[32mfound {}!\033[0m".format(now(), allsite, url))
+                        all_site += 1
+                        print(f'{now()} [{all_site}]: {txt_grn(f"found {url}!")}')
 
                     elif r.status_code in [502, 404, 403]:
                         not_found += 1
-                        allsite += 1
-                        print("{} [{}]: \033[33mnot found or not available!\033[0m".format(now(), allsite))
+                        all_site += 1
+                        print(f'{now()} [{all_site}]: {txt_yel("not found or not available!")}')
 
-                except:
+                except Exception:
                     exist += 1
-                    allsite += 1
-                    print("{} [{}]: \033[31msite not exist!\033[0m".format(now(), allsite))
+                    all_site += 1
+                    print(f"{now()} [{all_site}]: {txt_rd('site not exist!')}")
 
                 finally:
                     file.close()
@@ -100,7 +157,7 @@ def main():
 
         except KeyboardInterrupt:
             print("\n----- search statistics -----")
-            print("all/found/not/exist = {}/{}/{}/{}".format(allsite, found, not_found, exist))
+            print(f"all/found/not/exist = {all_site}/{found}/{not_found}/{exist}")
             break
 
 
