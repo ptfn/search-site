@@ -62,7 +62,7 @@ def now():
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Search Site")
+    parser = argparse.ArgumentParser(description="search site")
     parser.add_argument("-m", "--max",
                         type=int,
                         dest="max",
