@@ -93,6 +93,11 @@ def main():
                         default="site.txt",
                         dest="out",
                         help="out file")
+    parser.add_argument("-t", "--time",
+                        type=int,
+                        default=10,
+                        dest="time",
+                        help="timeout for a request to the site")
 
     args = parser.parse_args()
 
@@ -108,6 +113,7 @@ def main():
     alphabet = brut(args_big_char, args_small_char,
                     args_number, args_symbols)
     root = [".com", ".ru", ".org", ".net"]
+    used_url = []
 
     found = 0
     not_found = 0
@@ -129,8 +135,13 @@ def main():
             for i in range(len(root)):
                 url = "http://" + domain + root[i]
 
+                if url not in used_url:
+                    used_url.append(url)
+                else:
+                    continue
+
                 try:
-                    r = requests.get(url, timeout=10)
+                    r = requests.get(url, timeout=args.time)
                     soup = BeautifulSoup(r.content, "html.parser")
                     title = soup.title.string
 
